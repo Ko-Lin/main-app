@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { DefaultInSessionStyle, GetTimeNow, IWrapUp } from "../data/controller/stageDataController";
-import { get } from "http";
+import {
+  DefaultInSessionStyle,
+  GetTimeNow,
+  ICountdownData,
+  IWrapUp,
+} from "../data/controller/stageDataController";
 // write a count down component that takes a date prop and displays the time remaining until that date
 // the component should update every second
 // the component should display the time remaining in the format `hh:mm:ss`
 // if the date has passed, the component should display `00:00:00`
 
-interface CountdownProps {
-  untilDate: Date,
-  sinceDate: Date
-  wrappUps: IWrapUp[]
-}
 function calculateHours(distance: number) {
   return Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 }
@@ -46,12 +45,12 @@ function compareDates(date1: Date, date2: Date) {
 
 function calculateTimeDistance(sinceDate: Date, untilDate: Date) {
   const now = GetTimeNow();
-  
+
   const comparison = compareDates(now, sinceDate);
   const since = (comparison > 0 ? now : sinceDate).getTime();
   const until = untilDate.getTime();
   const diff = until - since;
-  return  diff > 0 ? diff : 0;
+  return diff > 0 ? diff : 0;
 }
 
 function calculateTimeRemaining(distance: number) {
@@ -64,36 +63,44 @@ function calculateTimeRemaining(distance: number) {
   )}`;
 }
 
-export const Countdown: React.FC<CountdownProps> = ( props ) => {
+interface CountdownProps {
+  data: ICountdownData;
+}
 
-
-  const [inSessionStyle, setInSessionStyle] = useState<React.CSSProperties>(DefaultInSessionStyle);
+export const Countdown: React.FC<CountdownProps> = (props) => {
+  const [inSessionStyle, setInSessionStyle] = useState<React.CSSProperties>(
+    DefaultInSessionStyle
+  );
   const [timeRemaining, setTimeRemaining] = useState<string>("");
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const distance = calculateTimeDistance(props.sinceDate, props.untilDate);
+      const distance = calculateTimeDistance(
+        props.data.since,
+        props.data.until
+      );
       const timeRemaining = calculateTimeRemaining(distance);
       setTimeRemaining(timeRemaining);
-      props.wrappUps.sort((a, b) => a.wrapUpInSeconds > b.wrapUpInSeconds ? 1 : -1).some(wrapUp => {
-        if (distance <= (wrapUp.wrapUpInSeconds * 1000)) 
-          {
-          setInSessionStyle(wrapUp.style);
-          return true;
-        }
-        return false;
-      });
+      props.data.wrapUps
+        .sort((a, b) => (a.wrapUpInSeconds > b.wrapUpInSeconds ? 1 : -1))
+        .some((wrapUp) => {
+          if (distance <= wrapUp.wrapUpInSeconds * 1000) {
+            setInSessionStyle(wrapUp.style);
+            return true;
+          }
+          return false;
+        });
     }, 1000);
 
     return () => clearInterval(interval);
-  },[props.sinceDate, props.untilDate, props.wrappUps]);
+  }, [props.data.since, props.data.until, props.data.wrapUps]);
 
+  // centre div
   return (
-    <div
-      style={inSessionStyle}
-    >
-      {timeRemaining}
+    <div key={props.data.id} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+      <h1>{props.data.title}</h1>
+      <h3>{props.data.speaker}</h3>
+      <div title={props.data.since.toISOString()} style={inSessionStyle}>{timeRemaining}</div>
     </div>
   );
 };

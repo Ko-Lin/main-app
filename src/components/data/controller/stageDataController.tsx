@@ -10,13 +10,13 @@ export interface IWrapUp {
   style: React.CSSProperties;
 }
 
-interface ICountdownData {
+export interface ICountdownData {
   id: string;
   title: string;
   speaker: string;
-  untilDate(): Date;
-  sinceDate(): Date;
-  getWrapUps(): IWrapUp[];
+  until: Date;
+  since: Date;
+  wrapUps: IWrapUp[];
 }
 
 interface IStageData {
@@ -72,7 +72,7 @@ export const WrapUpYellow: React.CSSProperties = {
 
 export function GetStageListingData(): IStageData[] {
   // return a date 2 mins from now
-  const now = new Date(2024, 1, 24, 17, 35);
+  const now = new Date(2024, 1, 24, 17, 55);
   const twoMinutesLater = new Date(now);
   twoMinutesLater.setMinutes(now.getMinutes() + 2);
   const fiveMinutesLater = new Date(now);
@@ -84,9 +84,9 @@ export function GetStageListingData(): IStageData[] {
       id: "1",
       title: "Countdown 1",
       speaker: "Speaker 1",
-      sinceDate: () => now,
-      untilDate: () => twoMinutesLater,
-      getWrapUps: () => [
+      since: now,
+      until: twoMinutesLater,
+      wrapUps: [
         {
           wrapUpInSeconds: 30,
           style: WrapUpRed,
@@ -101,9 +101,9 @@ export function GetStageListingData(): IStageData[] {
       id: "2",
       title: "Countdown 2",
       speaker: "Speaker 2",
-      sinceDate: () => twoMinutesLater,
-      untilDate: () => fiveMinutesLater,
-      getWrapUps: () => [ 
+      since: twoMinutesLater,
+      until: fiveMinutesLater,
+      wrapUps: [ 
         {
           wrapUpInSeconds: 30,
           style: WrapUpRed,
