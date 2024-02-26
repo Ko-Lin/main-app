@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-  DefaultInSessionStyle,
-  GetTimeNow,
+  DefaultExpiredSessionStyle,
+  DefaultInactiveSessionStyle,
   ICountdownData,
-  IWrapUp,
   calculateTimeDistance,
   calculateTimeRemaining,
 } from "../data/controller/stageDataController";
@@ -16,10 +15,9 @@ interface CountdownProps {
   data: ICountdownData;
 }
 
-
 export const Countdown: React.FC<CountdownProps> = (props) => {
   const [inSessionStyle, setInSessionStyle] = useState<React.CSSProperties>(
-    DefaultInSessionStyle
+    DefaultInactiveSessionStyle
   );
   const [timeRemaining, setTimeRemaining] = useState<string>("");
 
@@ -31,26 +29,36 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
       );
       const timeRemaining = calculateTimeRemaining(distance);
       setTimeRemaining(timeRemaining);
-      props.data.wrapUps
+      if (distance < 0) {
+        setInSessionStyle(DefaultExpiredSessionStyle);
+      }
+
+      const wrapUp = props.data.wrapUps
         .sort((a, b) => (a.wrapUpInSeconds > b.wrapUpInSeconds ? 1 : -1))
-        .some((wrapUp) => {
-          if (distance <= wrapUp.wrapUpInSeconds * 1000) {
-            setInSessionStyle(wrapUp.style);
-            return true;
-          }
-          return false;
-        });
+        .filter(
+          (wrapUp) => distance <= wrapUp.wrapUpInSeconds * 1000 && distance > 0
+        );
+      if (wrapUp.length > 0) {
+        setInSessionStyle(wrapUp[0].style);
+      }
     }, 1000);
 
     return () => clearInterval(interval);
   }, [props.data.since, props.data.until, props.data.wrapUps]);
 
-  // centre div
+
   return (
-    <div key={props.data.id} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <h1>{props.data.title}</h1>
       <h3>{props.data.speaker}</h3>
-      <div title={props.data.since.toISOString()} style={inSessionStyle}>{timeRemaining}</div>
+      <div style={inSessionStyle}>{timeRemaining}</div>
     </div>
   );
 };

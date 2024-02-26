@@ -9,5 +9,4 @@ export default function StageList() {
       {data.map(stage => (<a href={generateStageViewerPath(stage.id)} key={stage.id}>{stage.name}</a>))}
     </div>
   )
-
 }

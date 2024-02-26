@@ -12,7 +12,7 @@ export default function StageViewer({ params,}: {
   return (
     <div>
       {
-        data?.countdowns.map(c => (<Countdown key={data.id} data={c}  />))
+        data?.countdowns.map(c => (<Countdown key={c.id} data={c}  />))
       }
       <TimeDisplay type={TimeTypes.Local} />
       <TimeDisplay type={TimeTypes.UTC} />
