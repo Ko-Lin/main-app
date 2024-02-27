@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import "./countdown.css";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  DefaultExpiredSessionStyle,
-  DefaultInactiveSessionStyle,
   ICountdownData,
   calculateTimeDistance,
   calculateTimeRemaining,
@@ -16,12 +15,22 @@ interface CountdownProps {
 }
 
 export const Countdown: React.FC<CountdownProps> = (props) => {
-  const [inSessionStyle, setInSessionStyle] = useState<React.CSSProperties>(
-    DefaultInactiveSessionStyle
-  );
+  const defaultAudioSrc = "/asset/audio/mixkit-store-door-bell-ring-934.wav";
+  const [className, setClassName] = useState<string>("inactiveSession");
   const [timeRemaining, setTimeRemaining] = useState<string>("");
+  const audioRef = useRef(null); // Reference to the audio component
+  const [isPlaying, setIsPlaying] = useState(false); // State to manage play status
+  const [muteAudio, setMuteAudio] = useState(true);
 
   useEffect(() => {
+    const playSound = (src: string) => {
+      if (isPlaying || audioRef.current === null) return;
+      const audio = audioRef.current as HTMLAudioElement;
+      audio.src = src;
+      audio.play();
+      setIsPlaying(true);
+    };
+
     const interval = setInterval(() => {
       const distance = calculateTimeDistance(
         props.data.since,
@@ -30,35 +39,53 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
       const timeRemaining = calculateTimeRemaining(distance);
       setTimeRemaining(timeRemaining);
       if (distance < 0) {
-        setInSessionStyle(DefaultExpiredSessionStyle);
+        setClassName("expiredSession");
+        if (distance > -1000) {
+          playSound(defaultAudioSrc);
+        }
       }
 
-      const wrapUp = props.data.wrapUps
+      const wrapUps = props.data.wrapUps
         .sort((a, b) => (a.wrapUpInSeconds > b.wrapUpInSeconds ? 1 : -1))
         .filter(
           (wrapUp) => distance <= wrapUp.wrapUpInSeconds * 1000 && distance > 0
         );
-      if (wrapUp.length > 0) {
-        setInSessionStyle(wrapUp[0].style);
+
+      if (wrapUps.length > 0) {
+        const wrapUp = wrapUps[0];
+        setClassName(wrapUp.className);
+        if (wrapUp.wrapUpInSeconds * 1000 - distance < 1000 && !isPlaying)
+          playSound(wrapUp.audioSrc);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [props.data.since, props.data.until, props.data.wrapUps]);
-
+  }, [props.data.since, props.data.until, props.data.wrapUps, isPlaying]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h1>{props.data.title}</h1>
-      <h3>{props.data.speaker}</h3>
-      <div style={inSessionStyle}>{timeRemaining}</div>
+    <div className="countdown">
+      <div className="sessionTitle">
+        <h1 >{props.data.title}</h1>
+        <button
+          className={muteAudio ? "unmuteButton" : "muteButton"}
+          onClick={() => {
+            setMuteAudio(!muteAudio);
+          }}
+        >
+          {muteAudio ? "Unmute" : "Mute"}
+        </button>
+      </div>
+      <div id="sessionSpeaker">
+        <h3>{props.data.speaker}</h3>
+      </div>
+      <div className={className}>{timeRemaining}</div>
+      <audio
+        id="audio"
+        ref={audioRef}
+        muted={muteAudio}
+        autoPlay={false}
+        onEnded={() => setIsPlaying(false)}
+      />
     </div>
   );
 };

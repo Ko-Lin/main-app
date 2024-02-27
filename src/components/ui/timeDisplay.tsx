@@ -1,5 +1,5 @@
+import './timeDisplay.css';
 // render local time display component
-
 import { useEffect, useState } from "react";
 export enum TimeTypes {
   Local,
@@ -25,7 +25,7 @@ export const TimeDisplay: React.FC<TimeDisplayProps> = (props) => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div>
+    <div className='RealTimeDisplay'>
       <div>{timeZone}</div>
       <div
         style={{

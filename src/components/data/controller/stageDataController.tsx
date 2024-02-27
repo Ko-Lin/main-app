@@ -1,5 +1,44 @@
-import React from "react";
 
+const simpleTests = `
+[
+  {
+    "id": 1,
+    "title": "Simple Test",
+    "speaker": "Ko",
+    "duration": 1,
+    "firstWrapUpInSec": 40,
+    "secondWrapUpInSec": 25,
+    "lastWrapUpInSec": 10
+  },
+  {
+    "id": 2,
+    "title": "Simple Test",
+    "speaker": "Ko",
+    "duration": 2,
+    "firstWrapUpInSec": 50,
+    "secondWrapUpInSec": 40,
+    "lastWrapUpInSec": 20
+  },
+  {
+    "id": 3,
+    "title": "Simple Test",
+    "speaker": "Ko",
+    "duration": 3,
+    "firstWrapUpInSec": 50,
+    "secondWrapUpInSec": 40,
+    "lastWrapUpInSec": 20
+  },
+  {
+    "id": 4,
+    "title": "Simple Test",
+    "speaker": "Ko",
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
+  }
+] 
+`
 
 const kidsHomework = `
 [
@@ -7,7 +46,10 @@ const kidsHomework = `
     "id": 1,
     "title": "Kids Homework",
     "speaker": "Ren / Cyrsu / Ko",
-    "duration": 60
+    "duration": 60,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   }
 ] 
 `
@@ -17,79 +59,118 @@ const semiIdeaFocusGroup = `
     "id": 1,
     "title": "測試軟體 / 喇叭 / 麥克風",
     "speaker": "電信/經營規劃／JC",
-    "duration": 30
+    "duration": 30,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 2,
     "title": "開場",
     "speaker": "IC 設計-販售-小卡肖",
-    "duration": 3
+    "duration": 3,
+    "firstWrapUpInSec": 60,
+    "secondWrapUpInSec": 40,
+    "lastWrapUpInSec": 20
   },
   {
     "id": 3,
     "title": "規則介紹 / 輪流自我介紹",
     "speaker": "IC 設計-販售-小卡肖",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 4,
     "title": "Timer Duty 說明",
     "speaker": "資訊/工程師𝟯.𝟭𝟰𝟭𝟱",
-    "duration": 2
+    "duration": 2,
+    "firstWrapUpInSec": 60,
+    "secondWrapUpInSec": 40,
+    "lastWrapUpInSec": 20
   },
   {
     "id": 5,
     "title": "What are AI Chips",
     "speaker": "新竹封測業務喬治",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 6,
     "title": "GPUs / TPUs",
     "speaker": "封測_CS_錢夫人",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 7,
     "title": "FPGAs",
     "speaker": "IC製造-艾倫",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 8,
     "title": "ASICs / NPUs / VPUs",
     "speaker": "IC PM/Vivi",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 9,
     "title": "Application of AI chips",
     "speaker": "JH-Sales",
-    "duration": 7
+    "duration": 7,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 10,
     "title": "Break",
     "speaker": "None",
-    "duration": 5
+    "duration": 5,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 11,
     "title": "Q&A Session",
     "speaker": "智動化/ 無人車AMR/外星仁",
-    "duration": 30
+    "duration": 30,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 12,
     "title": "主持人：邀請成員讀書會回饋",
     "speaker": "IC 設計-販售-小卡肖",
-    "duration": 10
+    "duration": 10,
+    "firstWrapUpInSec": 180,
+    "secondWrapUpInSec": 120,
+    "lastWrapUpInSec": 60
   },
   {
     "id": 13,
     "title": "散會",
     "speaker": "IC 設計-販售-小卡肖",
-    "duration": 2
+    "duration": 2,
+    "firstWrapUpInSec": 60,
+    "secondWrapUpInSec": 40,
+    "lastWrapUpInSec": 20
   }
 ]
 `
@@ -98,6 +179,9 @@ interface IAgenda {
   title: string;
   speaker: string;
   duration: number;
+  firstWrapUpInSec: number;
+  secondWrapUpInSec: number;
+  lastWrapUpInSec: number;
 }
 
 enum CountDownTrigger {
@@ -107,7 +191,8 @@ enum CountDownTrigger {
 
 export interface IWrapUp {
   wrapUpInSeconds: number;
-  style: React.CSSProperties;
+  className: string;
+  audioSrc: string;
 }
 
 export interface ICountdownData {
@@ -131,53 +216,7 @@ interface IStageData {
 export function GetTimeNow() {
   return new Date();
 }
-export const DefaultExpiredSessionStyle: React.CSSProperties = {
-  color: "#000",
-  backgroundColor: "gray",
-  padding: "10px",
-  borderRadius: "5px",
-  width: "fit-content",
-  fontFamily: "Arial, sans-serif",
-  fontSize: "12em",
-}
-export const DefaultInactiveSessionStyle: React.CSSProperties = {
-  color: "#fff",
-  backgroundColor: "#000",
-  padding: "10px",
-  borderRadius: "5px",
-  width: "fit-content",
-  fontFamily: "Arial, sans-serif",
-  fontSize: "12em",
-};
-export const WrapUpRed: React.CSSProperties = {
-  color: "#000",
-  backgroundColor: "red",
-  padding: "10px",
-  borderRadius: "5px",
-  width: "fit-content",
-  fontFamily: "Arial, sans-serif",
-  fontSize: "12em",
-};
 
-export const WrapUpGray: React.CSSProperties = {
-  color: "#000",
-  backgroundColor: "gray",
-  padding: "10px",
-  borderRadius: "5px",
-  width: "fit-content",
-  fontFamily: "Arial, sans-serif",
-  fontSize: "12em",
-};
-
-export const WrapUpYellow: React.CSSProperties = {
-  color: "#000",
-  backgroundColor: "yellow",
-  padding: "10px",
-  borderRadius: "5px",
-  width: "fit-content",
-  fontFamily: "Arial, sans-serif",
-  fontSize: "12em",
-}
 
 function calculateHours(distance: number) {
   return Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -251,12 +290,19 @@ function generateCountdowns(agendas: IAgenda[], startTime: Date): ICountdownData
       until: until,
       wrapUps: [
         {
-          wrapUpInSeconds: 30,
-          style: WrapUpRed,
+          wrapUpInSeconds: agenda.lastWrapUpInSec,
+          className: 'wrapUpRed',
+          audioSrc: "/asset/audio/mixkit-clear-announce-tones-2861.wav"
         },
         {
-          wrapUpInSeconds: 60,
-          style: WrapUpYellow,
+          wrapUpInSeconds: agenda.secondWrapUpInSec,
+          className: 'wrapUpYellow',
+          audioSrc: "/asset/audio/mixkit-confirmation-tone-2867.wav"
+        },
+        {
+          wrapUpInSeconds: agenda.firstWrapUpInSec,
+          className: 'wrapUpGreen',
+          audioSrc: "/asset/audio/mixkit-confirmation-tone-2867.wav"
         },
       ],
     };
@@ -269,15 +315,17 @@ function generateCountdowns(agendas: IAgenda[], startTime: Date): ICountdownData
 }
 export function GetStageListingData(): IStageData[] {
   // return a date 2 mins from now
-  const startTime = new Date(2024, 1, 26, 19, 10);
+  const startTime = new Date(2024, 1, 27, 18, 0);
 
   const semiIdeaAgendas: IAgenda[] = JSON.parse(semiIdeaFocusGroup);
   const kidsHomeworkAgendas: IAgenda[] = JSON.parse(kidsHomework);
+  const simpleTestAgendas: IAgenda[] = JSON.parse(simpleTests);
 
   // create some dummy stage data
 
   const stage1: ICountdownData[] = generateCountdowns(semiIdeaAgendas, startTime);
   const stage2: ICountdownData[] = generateCountdowns(kidsHomeworkAgendas, startTime);
+  const stage3: ICountdownData[] = generateCountdowns(simpleTestAgendas,new Date()); 
 				
   const stageList: IStageData[] = [
     {
@@ -290,6 +338,11 @@ export function GetStageListingData(): IStageData[] {
       name: "Homework",
       countdowns: stage2,
     },
+    {
+      id: "3",
+      name: "Simple Test",
+      countdowns: stage3,
+    }
   ];
 
   return stageList;
