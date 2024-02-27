@@ -315,7 +315,7 @@ function generateCountdowns(agendas: IAgenda[], startTime: Date): ICountdownData
 }
 export function GetStageListingData(): IStageData[] {
   // return a date 2 mins from now
-  const startTime = new Date(2024, 1, 27, 20, 4);
+  const startTime = new Date(2024, 1, 27, 22, 0);
 
   const semiIdeaAgendas: IAgenda[] = JSON.parse(semiIdeaFocusGroup);
   const kidsHomeworkAgendas: IAgenda[] = JSON.parse(kidsHomework);
