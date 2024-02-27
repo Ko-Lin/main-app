@@ -3,12 +3,12 @@ const simpleTests = `
 [
   {
     "id": 1,
-    "title": "Simple Test 1",
+    "title": "Timer Run",
     "speaker": "Ko",
     "duration": 1,
     "firstWrapUpInSec": 40,
-    "secondWrapUpInSec": 25,
-    "lastWrapUpInSec": 10
+    "secondWrapUpInSec": 35,
+    "lastWrapUpInSec": 30
   },
   {
     "id": 2,
@@ -315,7 +315,7 @@ function generateCountdowns(agendas: IAgenda[], startTime: Date): ICountdownData
 }
 export function GetStageListingData(): IStageData[] {
   // return a date 2 mins from now
-  const startTime = new Date(2024, 1, 27, 22, 30);
+  const startTime = new Date(2024, 1, 27, 21, 4);
 
   const semiIdeaAgendas: IAgenda[] = JSON.parse(semiIdeaFocusGroup);
   const kidsHomeworkAgendas: IAgenda[] = JSON.parse(kidsHomework);
