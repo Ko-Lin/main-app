@@ -1,3 +1,4 @@
+
 "use client";
 import { GetStageData } from "@/components/data/controller/stageDataController";
 import { Countdown, CountdownMode } from "@/components/ui/countdown";
@@ -13,8 +14,10 @@ export default function StageViewer({
   return (
     <div>
       {data?.countdowns.map((c) => (
-        <Countdown key={c.id} data={c} mode={CountdownMode.Viewer} />
+        <Countdown key={c.id} data={c} mode={CountdownMode.Controller} />
       ))}
+      <TimeDisplay type={TimeTypes.Local} />
+      <TimeDisplay type={TimeTypes.UTC} />
     </div>
   );
 }

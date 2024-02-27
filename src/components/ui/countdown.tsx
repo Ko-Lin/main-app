@@ -1,6 +1,7 @@
 import "./countdown.css";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  GetTimeNow,
   ICountdownData,
   calculateTimeDistance,
   calculateTimeRemaining,
@@ -10,8 +11,15 @@ import {
 // the component should display the time remaining in the format `hh:mm:ss`
 // if the date has passed, the component should display `00:00:00`
 
+export enum CountdownMode {
+  Viewer,
+  Agenda,
+  Controller,
+  Moderator,
+}
 interface CountdownProps {
   data: ICountdownData;
+  mode: CountdownMode;
 }
 
 export const Countdown: React.FC<CountdownProps> = (props) => {
@@ -21,6 +29,9 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
   const audioRef = useRef(null); // Reference to the audio component
   const [isPlaying, setIsPlaying] = useState(false); // State to manage play status
   const [muteAudio, setMuteAudio] = useState(true);
+  const [showCountdown, setShowCountdown] = useState(
+    props.mode !== CountdownMode.Viewer
+  );
 
   useEffect(() => {
     const playSound = (src: string) => {
@@ -38,11 +49,29 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
       );
       const timeRemaining = calculateTimeRemaining(distance);
       setTimeRemaining(timeRemaining);
+
+      if (props.mode === CountdownMode.Viewer) {
+        if (
+          distance > 0 &&
+          GetTimeNow().getTime() > props.data.since.getTime()
+        ) {
+          setShowCountdown(true);
+        } else {
+          setShowCountdown(false);
+        }
+      }
+
       if (distance < 0) {
         setClassName("expiredSession");
         if (distance > -1000) {
           playSound(defaultAudioSrc);
         }
+        return;
+      }
+      else if(GetTimeNow().getTime() < props.data.since.getTime())
+      {
+        setClassName("inactiveSession");
+        return;
       }
 
       const wrapUps = props.data.wrapUps
@@ -57,13 +86,23 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
         if (wrapUp.wrapUpInSeconds * 1000 - distance < 1000 && !isPlaying)
           playSound(wrapUp.audioSrc);
       }
+      else
+      {
+        setClassName("activeSession");
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [props.data.since, props.data.until, props.data.wrapUps, isPlaying]);
+  }, [
+    props.data.since,
+    props.data.until,
+    props.data.wrapUps,
+    isPlaying,
+    props.mode,
+  ]);
 
   return (
-    <div className="countdown">
+    <div className={showCountdown ? "countdown" : "hideCountdown"}>
       <div className="sessionTitle">
         <h1>{props.data.title}</h1>
       </div>
@@ -74,7 +113,7 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
         {timeRemaining}
 
         <button
-          className={muteAudio ? "unmuteButton" : "muteButton"}
+          className={props.mode === CountdownMode.Viewer ? "hideButton" : muteAudio ? "unmuteButton" : "muteButton"}
           onClick={() => {
             setMuteAudio(!muteAudio);
           }}

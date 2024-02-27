@@ -3,7 +3,7 @@ const simpleTests = `
 [
   {
     "id": 1,
-    "title": "Simple Test",
+    "title": "Simple Test 1",
     "speaker": "Ko",
     "duration": 1,
     "firstWrapUpInSec": 40,
@@ -12,7 +12,7 @@ const simpleTests = `
   },
   {
     "id": 2,
-    "title": "Simple Test",
+    "title": "Simple Test 2",
     "speaker": "Ko",
     "duration": 2,
     "firstWrapUpInSec": 50,
@@ -21,7 +21,7 @@ const simpleTests = `
   },
   {
     "id": 3,
-    "title": "Simple Test",
+    "title": "Simple Test 3",
     "speaker": "Ko",
     "duration": 3,
     "firstWrapUpInSec": 50,
@@ -30,7 +30,7 @@ const simpleTests = `
   },
   {
     "id": 4,
-    "title": "Simple Test",
+    "title": "Simple Test 4",
     "speaker": "Ko",
     "duration": 7,
     "firstWrapUpInSec": 180,
@@ -315,7 +315,7 @@ function generateCountdowns(agendas: IAgenda[], startTime: Date): ICountdownData
 }
 export function GetStageListingData(): IStageData[] {
   // return a date 2 mins from now
-  const startTime = new Date(2024, 1, 27, 18, 0);
+  const startTime = new Date(2024, 1, 27, 20, 4);
 
   const semiIdeaAgendas: IAgenda[] = JSON.parse(semiIdeaFocusGroup);
   const kidsHomeworkAgendas: IAgenda[] = JSON.parse(kidsHomework);
@@ -354,4 +354,8 @@ export function GetStageData(stageId: string): IStageData | undefined {
 
 export function generateStageViewerPath(stageId: string): string {
   return `/stages/viewer/${stageId}`;
+}
+
+export function generateStageControllerPath(stageId: string): string {
+  return `/stages/controller/${stageId}`;
 }
