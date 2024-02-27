@@ -65,7 +65,14 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
   return (
     <div className="countdown">
       <div className="sessionTitle">
-        <h1 >{props.data.title}</h1>
+        <h1>{props.data.title}</h1>
+      </div>
+      <div id="sessionSpeaker">
+        <h3>{props.data.speaker}</h3>
+      </div>
+      <div className={className}>
+        {timeRemaining}
+
         <button
           className={muteAudio ? "unmuteButton" : "muteButton"}
           onClick={() => {
@@ -75,10 +82,6 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
           {muteAudio ? "Unmute" : "Mute"}
         </button>
       </div>
-      <div id="sessionSpeaker">
-        <h3>{props.data.speaker}</h3>
-      </div>
-      <div className={className}>{timeRemaining}</div>
       <audio
         id="audio"
         ref={audioRef}
