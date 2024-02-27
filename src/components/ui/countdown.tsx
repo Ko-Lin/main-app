@@ -29,11 +29,15 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
   const audioRef = useRef(null); // Reference to the audio component
   const [isPlaying, setIsPlaying] = useState(false); // State to manage play status
   const [muteAudio, setMuteAudio] = useState(true);
+  const [startTime, setStartTime] = useState<string>("")
+  const [endTime, setEndTime] = useState<string>("")
   const [showCountdown, setShowCountdown] = useState(
     props.mode !== CountdownMode.Viewer
   );
 
   useEffect(() => {
+    setStartTime(props.data.since.toLocaleTimeString());
+    setEndTime(props.data.until.toLocaleTimeString());
     const playSound = (src: string) => {
       if (isPlaying || audioRef.current === null) return;
       const audio = audioRef.current as HTMLAudioElement;
@@ -108,6 +112,10 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
       </div>
       <div id="sessionSpeaker">
         <h3>{props.data.speaker}</h3>
+      </div>
+      <div className={props.mode !== CountdownMode.Viewer ? "showDetails" : "hideDetails"}>
+            <label>{startTime}</label>
+            <label>{endTime}</label>
       </div>
       <div className={className}>
         {timeRemaining}

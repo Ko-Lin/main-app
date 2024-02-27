@@ -36,6 +36,16 @@ div.countdown {
 div.hideCountdown {
   display: none;
 }
+div.showDetails{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+div.hideDetails div{
+  display: none;
+}
 div.wrapUpYellow{
   color: #000;
   background-color: yellow;
