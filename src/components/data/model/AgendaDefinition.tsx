@@ -1,10 +1,6 @@
+import { GetTimeNow } from "@/components/util/timeUtil";
 import { IWrapUpConfig, IWrapUpDefinition, WrapUpDefinition } from "./WrapUpDefinition";
 
-export enum Trigger {
-  Manual = "MANUAL",
-  Scheduled = "SCHEDULED",
-  PreviousAgenda = "PREVIOUS_AGENDA"
-}
 export interface IUserAgendaConfig
 {
   id: string;
@@ -12,9 +8,6 @@ export interface IUserAgendaConfig
   showTitle: boolean;
   speaker: string;
   showSpeaker: boolean;
-  trigger: Trigger;
-  startDate: Date; // Mode: Scheduled, Optional
-  startTime: Date; // Mode: Scheduled
   durationInSec: number;  // Required
   previousAgendaId: string | null; // Mode: PreviousAgenda
   wrapUps: IWrapUpConfig[];
@@ -33,18 +26,8 @@ export interface IAgendaDefinition {
   }
 
 
-function getStartDate(props: IUserAgendaConfig): Date | null {
-    if(props.trigger === Trigger.Scheduled)
-    {
-        return new Date(props.startDate.getDate() + props.startTime.getTime());
-    }
-
-    return null;
-}
-
 export function AgendaDefinition (props: IUserAgendaConfig) : IAgendaDefinition {
 
-    const since = getStartDate(props)
     return {
         id: props.id,
         title: props.title,

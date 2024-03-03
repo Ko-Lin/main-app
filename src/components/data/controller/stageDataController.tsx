@@ -11,6 +11,7 @@ const manualStartStage = `
     "id": "1",
     "name": "Manual Trigger Stage",
     "userId": "Ko",
+    "startDate": "2024-03-03T09:30:00.000Z",
     "agendaConfigs": [
       {
         "id": "1",
@@ -18,9 +19,7 @@ const manualStartStage = `
         "showTitle": true,
         "speaker": "Ko",
         "showSpeaker": true,
-        "trigger": "MANUAL",
-        "startDate": null,
-        "startTime": null,
+        "trigger": "SCHEDULED_DATE",
         "durationInSec": 60,
         "previousAgendaId": null,
         "wrapUps": [
@@ -45,8 +44,6 @@ const manualStartStage = `
         "speaker": "Ko",
         "showSpeaker": false,
         "trigger": "MANUAL",
-        "startDate": null,
-        "startTime": null,
         "durationInSec": 120,
         "previousAgendaId": null,
         "wrapUps": [
