@@ -41,9 +41,9 @@ const manualStartStage = `
       {
         "id": "2",
         "title": "Ren is delicious",
-        "showTitle": true,
+        "showTitle": false,
         "speaker": "Ko",
-        "showSpeaker": true,
+        "showSpeaker": false,
         "trigger": "MANUAL",
         "startDate": null,
         "startTime": null,
@@ -69,13 +69,19 @@ const manualStartStage = `
 ]
 `
 
-export function GetStageListingData(): IStageDefinition[] {
-  const stagesConfig : IStageConfig[] =  JSON.parse(manualStartStage); 
+export function GetStageConfigs() : IStageConfig[]
+{
+  return JSON.parse(manualStartStage); 
+}
+
+
+export function GetStageDefinitions(): IStageDefinition[] {
+  const stagesConfig = GetStageConfigs();
   return stagesConfig.map(StageDefinition);
 }
 
-export function GetStageData(stageId: string): IStageDefinition | undefined {
-  return GetStageListingData().find((s) => s.id === stageId);
+export function GetStageDefinition(stageId: string): IStageDefinition | undefined {
+  return GetStageDefinitions().find((s) => s.id === stageId);
 }
 
 export function generateStageViewerPath(stageId: string): string {

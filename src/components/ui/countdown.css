@@ -1,8 +1,14 @@
+div.hideSessionTitle{
+  display: none;
+}
 div.sessionTitle{
   font-weight: bold;
   margin: 10px;
   display: flex;
   flex-direction: row;
+}
+div.hideSessionSpeaker{
+  display: none;
 }
 div.sessionSpeaker{
   margin: 10px;
@@ -36,15 +42,15 @@ div.countdown {
 div.hideCountdown {
   display: none;
 }
+div.hideDetails{
+  display: none;
+}
 div.showDetails{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 10px;
-}
-div.hideDetails div{
-  display: none;
 }
 div.wrapUpYellow{
   color: #000;

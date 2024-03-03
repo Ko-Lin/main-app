@@ -1,6 +1,6 @@
 
 "use client";
-import { GetStageData } from "@/components/data/controller/stageDataController";
+import { GetStageDefinition } from "@/components/data/controller/stageDataController";
 import { Countdown, CountdownMode } from "@/components/ui/countdown";
 import { TimeDisplay, TimeTypes } from "@/components/ui/timeDisplay";
 
@@ -9,7 +9,7 @@ export default function StageViewer({
 }: {
   params: { stageId: string };
 }) {
-  const data = GetStageData(params.stageId);
+  const data = GetStageDefinition(params.stageId);
 
   return (
     <div>

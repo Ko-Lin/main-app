@@ -100,10 +100,10 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
 
   return (
     <div className={showCountdown ? "countdown" : "hideCountdown"}>
-      <div className="sessionTitle">
+      <div className={props.data.showTitle ? "sessionTitle" : "hideSessionTitle"}>
         <h1>{props.data.title}</h1>
       </div>
-      <div id="sessionSpeaker">
+      <div className={props.data.showSpeaker ? "sessionSpeaker" : "hideSessionSpeaker"}>
         <h3>{props.data.speaker}</h3>
       </div>
       <div className={props.mode !== CountdownMode.Viewer ? "showDetails" : "hideDetails"}>
