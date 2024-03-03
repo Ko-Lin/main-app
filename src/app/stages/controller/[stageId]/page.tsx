@@ -13,7 +13,7 @@ export default function StageViewer({
 
   return (
     <div>
-      {data?.countdowns.map((c) => (
+      {data?.agendaDefinitions.map((c) => (
         <Countdown key={c.id} data={c} mode={CountdownMode.Controller} />
       ))}
       <TimeDisplay type={TimeTypes.Local} />

@@ -1,15 +1,8 @@
+import { IAgendaDefinition } from "../data/model/AgendaDefinition";
+import { calculateTimeDistance, calculateTimeRemaining } from "../util/timeDistanceUtil";
+import { GetTimeNow } from "../util/timeUtil";
 import "./countdown.css";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  GetTimeNow,
-  ICountdownData,
-  calculateTimeDistance,
-  calculateTimeRemaining,
-} from "../data/controller/stageDataController";
-// write a count down component that takes a date prop and displays the time remaining until that date
-// the component should update every second
-// the component should display the time remaining in the format `hh:mm:ss`
-// if the date has passed, the component should display `00:00:00`
 
 export enum CountdownMode {
   Viewer,
@@ -18,7 +11,7 @@ export enum CountdownMode {
   Moderator,
 }
 interface CountdownProps {
-  data: ICountdownData;
+  data: IAgendaDefinition;
   mode: CountdownMode;
 }
 
@@ -36,8 +29,8 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
   );
 
   useEffect(() => {
-    setStartTime(props.data.since.toLocaleTimeString());
-    setEndTime(props.data.until.toLocaleTimeString());
+    setStartTime(props.data.since!.toLocaleTimeString());
+    setEndTime(props.data.until!.toLocaleTimeString());
     const playSound = (src: string) => {
       if (isPlaying || audioRef.current === null) return;
       const audio = audioRef.current as HTMLAudioElement;
@@ -48,8 +41,8 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
 
     const interval = setInterval(() => {
       const distance = calculateTimeDistance(
-        props.data.since,
-        props.data.until
+        props.data.since!,
+        props.data.until!
       );
       const timeRemaining = calculateTimeRemaining(distance);
       setTimeRemaining(timeRemaining);
@@ -57,7 +50,7 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
       if (props.mode === CountdownMode.Viewer) {
         if (
           distance > 0 &&
-          GetTimeNow().getTime() > props.data.since.getTime()
+          GetTimeNow().getTime() > props.data.since!.getTime()
         ) {
           setShowCountdown(true);
         } else {
@@ -72,7 +65,7 @@ export const Countdown: React.FC<CountdownProps> = (props) => {
         }
         return;
       }
-      else if(GetTimeNow().getTime() < props.data.since.getTime())
+      else if(GetTimeNow().getTime() < props.data.since!.getTime())
       {
         setClassName("inactiveSession");
         return;
